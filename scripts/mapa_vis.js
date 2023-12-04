@@ -1,4 +1,4 @@
-// the data
+// the data 
 const geoMap = "https://gisco-services.ec.europa.eu/distribution/v2/nuts/geojson/NUTS_RG_60M_2013_4326_LEVL_3.geojson";
 const natMort = "data/NatalidadeMortalidade.csv";
 const demographics = "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world_population.csv";
@@ -18,18 +18,29 @@ let projection = d3.geoMercator()
 .center([-8, 39.5])   
 .translate([width / 2, height / 2]);
 
+const customColors = ['#12121A', '#3E3F59', '#6A6C99', '#9699D9'];
+
 let colorScale = d3.scaleThreshold()
-.domain([0, 2, 4, 6, 8, 10])
-.range(d3.schemeBlues[7]);
+.domain([5, 7, 9, 11])
+.range(customColors);
 
 // Load dados externos para o array
-let promises = [d3.json(geoMap),
-    d3.csv(natMort, function(d) { return{name: d.name, code: "PT" + d.code, tbn: +d.tbn.replace(",", ".")}}),
+let promises = [
+    d3.json(geoMap),
+    d3.csv(natMort, function(d) { 
+        return {
+            nome: d.nome,
+            codigo: "PT" + d.codigo,
+            tbn: +d.tbn.replace(" ", "").replace(",", ".")
+        };
+    })
     ];
 
 Promise.all(promises).then(draw_map);
 
 function draw_map(data) {
+    console.log(data[1]);
+
     // Desenha o mapa
     svg.append("g")
     .selectAll("path")
@@ -42,11 +53,14 @@ function draw_map(data) {
         .append("path")
         // desenha cada país consoante a projecção definida
         .attr("d", d3.geoPath().projection(projection))
-        // .attr("fill", "#000000");
         // define a cor consoante a população
         .attr("fill", function (d) {
             // ir buscar a linha correspondente ao país
-            let line = data[1].find(o => o.code === d.properties.NUTS_ID)
-            return colorScale(line['tbn']);
-        });
+            let line = data[1].find(o => o.codigo === d.properties.NUTS_ID)
+            console.log('Line:', line);
+
+            if (line) {
+                return colorScale(line['tbn']);
+            }
+});
 }
