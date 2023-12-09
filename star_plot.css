@@ -2,6 +2,10 @@ body {
     padding: 20px;
 }
 
+.area {
+    fill-opacity: 0.5;
+}
+
 .radar-chart .area {
     fill-opacity: 0.7;
 }
@@ -14,17 +18,12 @@ body {
     fill-opacity: 0.9;
 }
 
-.area.germany,
-.germany .circle {
-    fill: #FFD700;
+
+.area,.circle {
+    fill: green;
     stroke: none;
 }
 
-.area.argentina,
-.argentina .circle {
-    fill: #ADD8E6;
-    stroke: none;
-}
 
 .radar-chart .level {
     stroke: grey;

@@ -1,23 +1,23 @@
 var RadarChart = {
     defaultConfig: {
       containerClass: 'radar-chart',
-      w: 600,
-      h: 600,
-      factor: 0.95,
+      w: 400,
+      h: 400,
+      factor: 0.9, //fator que determina o tamanho do gráfico
       factorLegend: 1,
-      levels: 3,
+      levels: 5, //numero de niveis do gráfico
       levelTick: false,
       TickLength: 10,
-      maxValue: 0,
+      maxValue: 0, //valor maximo e minimo nos eixos
       minValue: 0,
       radians: 2 * Math.PI,
       color: d3.scale.category10(),
-      axisLine: true,
+      axisLine: true, //exivir as linhas e os textos
       axisText: true,
-      circles: true,
-      radius: 5,
+      circles: true, //para exibir os círculos
+      radius: 1,
       open: false,
-      backgroundTooltipColor: "#555",
+      backgroundTooltipColor: "#555", //para formatar os textos quando passamos o rato por cima
       backgroundTooltipOpacity: "0.7",
       tooltipColor: "white",
       axisJoin: function(d, i) {
@@ -31,10 +31,10 @@ var RadarChart = {
       },
       transitionDuration: 300
     },
-    chart: function() {
+    chart: function() { //retorna o gráfico
       // default config
       var cfg = Object.create(RadarChart.defaultConfig);
-      function setTooltip(tooltip, msg){
+      function setTooltip(tooltip, msg){ //para exibi o texto quando passamos o rato por cima
         if(msg === false || msg == undefined){
           tooltip.classed("visible", 0);
           tooltip.select("rect").classed("visible", 0);
@@ -59,7 +59,7 @@ var RadarChart = {
           tooltip.attr("transform", "translate(" + (coords[0]+10) + "," + (coords[1]-10) + ")")
         }
       }
-      function radar(selection) {
+      function radar(selection) { //função principal que desenha o radar
         selection.each(function(data) {
           var container = d3.select(this);
           var tooltip = container.selectAll('g.tooltip').data([data[0]]);
@@ -91,7 +91,7 @@ var RadarChart = {
   
           container.classed(cfg.containerClass, 1);
   
-          function getPosition(i, range, factor, func){
+          function getPosition(i, range, factor, func){ //funções auxiliares para calcular as coordenadas x e y com base no índice, intervalo e fator.
             factor = typeof factor !== 'undefined' ? factor : 1;
             return range * (1 - factor * func(i * cfg.radians / total));
           }
@@ -102,7 +102,7 @@ var RadarChart = {
             return getPosition(i, range, factor, Math.cos);
           }
   
-          // levels && axises
+          // desenhar os grupos e as linhas que representam os níveis
           var levelFactors = d3.range(0, cfg.levels).map(function(level) {
             return radius * ((level + 1) / cfg.levels);
           });
@@ -170,7 +170,7 @@ var RadarChart = {
             });
           }
           if(cfg.axisLine || cfg.axisText) {
-            var axis = container.selectAll('.axis').data(allAxis);
+            var axis = container.selectAll('.axis').data(allAxis); //linhas e textos que representam os eixos
   
             var newAxis = axis.enter().append('g');
             if(cfg.axisLine) {
@@ -217,7 +217,7 @@ var RadarChart = {
               axis.y = (cfg.h/2-radius2)+getVerticalPosition(i, radius2, (parseFloat(Math.max(axis.value - cfg.minValue, 0))/maxValue)*cfg.factor);
             });
           });
-          var polygon = container.selectAll(".area").data(data, cfg.axisJoin);
+          var polygon = container.selectAll(".area").data(data, cfg.axisJoin); //elemento svg
   
           var polygonType = 'polygon';
           if (cfg.open) {
@@ -289,7 +289,7 @@ var RadarChart = {
               d3.select(this).classed('d3-enter', 0); // trigger css transition
             });
   
-            var circle = circleGroups.selectAll('.circle').data(function(datum, i) {
+            var circle = circleGroups.selectAll('.circle').data(function(datum, i) { //elemento svg
               return datum.axes.map(function(d) { return [d, i]; });
             });
   
@@ -348,7 +348,7 @@ var RadarChart = {
         });
       }
   
-      radar.config = function(value) {
+      radar.config = function(value) { //para obter as configurações do gráfico
         if(!arguments.length) {
           return cfg;
         }
@@ -362,10 +362,10 @@ var RadarChart = {
         }
         return radar;
       };
-  
+      console.log(radar.config);
       return radar;
     },
-    draw: function(id, d, options) {
+    draw: function(id, d, options) { //criar um novo gráfico
       var chart = RadarChart.chart().config(options);
       var cfg = chart.config();
   
