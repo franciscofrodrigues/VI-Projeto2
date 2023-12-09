@@ -1,20 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <script type="text/javascript" src="https://d3js.org/d3.v6.min.js"></script>
     <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
     <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+    <!--<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">-->
 
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+    <link rel="stylesheet" href="./css/star_plot.css">
     <title>Mapa</title>
 </head>
-<body>
-<div class="svg-container">
-    <svg id="mapa" width="800" height="800"></svg>
-</div>
 
-<script type="text/javascript" src="scripts/mapa_vis.js"></script>
-<!-- <script type="text/javascript" src="scripts/lay_map.js"></script> -->
+<body>
+    <div class="text">
+        <h5>População Portuguesa</h4>
+        <h3>População Residente</h3>
+        <h3>Taxa Bruta de Natalidade</h3>
+        <h3>Taxa Bruta de Mortalidade</h3>
+    </div>
+    
+    <div class="svg-container">
+        <svg id="mapa" width="800" height="800"></svg>
+    </div>
+
+    <div class="chart">
+        <h4>População por faixa etária</h4>
+        <p>em Portugal</p>
+        <hr>
+        <div class="chart-container"></div>
+    </div>
+    
+
+    <script type="text/javascript" src="scripts/mapa_vis.js"></script>
+    <script type="text/javascript" src="./scripts/star_plot.js"></script>
+
+    <!-- <script type="text/javascript" src="scripts/lay_map.js"></script> -->
 </body>
+
 </html>
