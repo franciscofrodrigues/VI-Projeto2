@@ -2,69 +2,73 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <script type="text/javascript" src="https://d3js.org/d3.v6.min.js"></script>
-    <!-- <script type="text/javascript" src="//d3js.org/d3.v3.js"></script> -->
-    <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+  <meta charset="UTF-8">
+  <script type="text/javascript" src="https://d3js.org/d3.v6.min.js"></script>
+  <!-- <script type="text/javascript" src="//d3js.org/d3.v3.js"></script> -->
+  <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
-    <link rel="stylesheet" href="./css/star_plot.css">
-    <title>Mapa</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+  <link rel="stylesheet" href="./css/star_plot.css">
+  <title>Mapa</title>
 </head>
 
 <body>
 
-    <!-- Coluna à esquerda -->
-    <div class="left-column">
-        <div class="text">
-            <h2 class="regular">
-                <span class="light">População Portuguesa</span>
-                <br>População Residente,
-                <br>Taxa Bruta de Natalidade,
-                <br>Taxa Bruta de Mortalidade
-            </h2>
-        </div>
-        <div class="chart">
-            <h4 class="regular">
-                População por faixa etária
-                <br>
-                <span class="light">em Portugal</span>
-            </h4>
-            <hr>
-            <div class="chart-container"></div> <!-- Onde é colocado o Star Plot -->
-        </div>
+  <!-- Coluna à esquerda -->
+  <div class="left-column">
+    <div class="text">
+      <h2 class="regular">
+        <span class="light">População Portuguesa</span>
+        <br>População Residente,
+        <br>Taxa Bruta de Natalidade,
+        <br>Taxa Bruta de Mortalidade
+      </h2>
     </div>
-
-    <div class="map-container">
-        <svg id="mapa" width="800" height="800"></svg> <!-- Visualização Mapa é colocada aqui -->
+    <div class="chart">
+      <h4 class="regular">
+        População por faixa etária
+        <br>
+        <span class="light">em Portugal</span>
+      </h4>
+      <hr>
+      <div class="chart-container">
+        <a href="star_plot.html">Gráfico População Residente</a>
+      </div> <!-- Onde é colocado o Star Plot -->
     </div>
+  </div>
 
-    <!-- Coluna à direita -->
-    <div class="right-column">
-        <div class="scales">
-            <h4 class="regular">Taxa Bruta de Natalidade</h4>
-            <hr>
-            <h4 class="regular">Taxa Bruta de Mortalidade</h4>
-            <hr>
-        </div>
+  <div class="map-container">
+    <svg id="mapa" width="800" height="800"></svg> <!-- Visualização Mapa é colocada aqui -->
+  </div>
+
+  <!-- Coluna à direita -->
+  <div class="right-column">
+    <div class="scales">
+      <h4 class="regular">Taxa Bruta de Natalidade</h4>
+      <hr>
+      <h4 class="regular">Taxa Bruta de Mortalidade</h4>
+      <hr>
     </div>
-</div>
+  </div>
+  </div>
 
 
 
-<script>
+  <script>
+
+
     // Função para carregar dados de um arquivo CSV
     function loadCSV(callback) {
       d3.csv("./data/DatasetResidentes2.csv", function (data) {
 
         var primeiraLinha = data[0];
 
-            // Formatar os dados conforme esperado pelo gráfico de radar
+        // Formatar os dados conforme esperado pelo gráfico de radar
         var formattedData = data.map(function (d) {
           return {
             className: d.nome,
@@ -74,18 +78,18 @@
               { axis: "40 - 59", value: parseInt(+d['40-59']) },
               { axis: "60 - 79", value: parseInt(+d['60-79']) },
               { axis: "80+", value: parseInt(+d['80+']) }
-              ]
-        };
-    });
+            ]
+          };
+        });
 
         callback(formattedData);
         console.log(formattedData[0].className)
         console.log(formattedData.map(item => item.className));
-    });
-  }
+      });
+    }
 
-        // Função para desenhar o gráfico de radar com os dados carregados
-  function drawRadarChart(data) {
+    // Função para desenhar o gráfico de radar com os dados carregados
+    function drawRadarChart(data) {
       RadarChart.defaultConfig.levelTick = true;
 
       console.log("Dados recebidos:", data);
@@ -95,14 +99,14 @@
       console.log("Desenhando gráfico com dados:", data);
 
       RadarChart.draw(".chart-container", data);
-  }
+    }
 
-        // Carregar dados e desenhar o gráfico de radar
-  loadCSV(drawRadarChart);
-</script>
-<script type="text/javascript" src="scripts/mapa_vis.js"></script>
-<script type="text/javascript" src="./scripts/star_plot.js"></script>
-<!-- <script type="text/javascript" src="scripts/lay_map.js"></script> -->
+    // Carregar dados e desenhar o gráfico de radar
+    loadCSV(drawRadarChart);
+  </script>
+  <script type="text/javascript" src="scripts/mapa_vis.js"></script>
+  <script type="text/javascript" src="./scripts/star_plot.js"></script>
+  <!-- <script type="text/javascript" src="scripts/lay_map.js"></script> -->
 </body>
 
 </html>
