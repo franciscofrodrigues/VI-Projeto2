@@ -1,11 +1,11 @@
 var RadarChart = {
     defaultConfig: {
       containerClass: 'radar-chart',
-      w: 400,
-      h: 400,
+      w: 200,
+      h: 200,
       factor: 0.9, //fator que determina o tamanho do gráfico
       factorLegend: 1,
-      levels: 5, //numero de niveis do gráfico
+      levels: 2, //numero de niveis do gráfico
       levelTick: false,
       TickLength: 10,
       maxValue: 0, //valor maximo e minimo nos eixos
@@ -382,90 +382,7 @@ var RadarChart = {
 
 
 
-RadarChart.defaultConfig.color = function() {};
-RadarChart.defaultConfig.radius = 3;
+
+
 
   
-// Função para carregar dados de um arquivo CSV
-function loadList(callback) {
-  d3.csv("./data/DatasetResidentes2.csv", function (data) {
-      // Chama a função de callback com os dados carregados
-      callback(data);
-  });
-}
-
-// Função para extrair a primeira coluna do CSV
-function extrairPrimeiraColuna(data, callback) {
-  // Obtém os valores da primeira coluna
-  var primeiraColuna = data.map(function (d) {
-      return d.nome;
-  });
-
-  // Imprime os valores na página
-  var listaConteudo = document.getElementById('listaConteudo');
-  primeiraColuna.forEach(function (valor) {
-      var li = document.createElement('li');
-      li.textContent = valor;
-      li.addEventListener('click', function () {
-          // Quando um nome é clicado, encontra os dados correspondentes no CSV
-          var dadosDoNome = data.find(function (item) {
-              return item.nome === valor;
-          });
-
-          // Atualiza o gráfico de radar
-          callback([dadosDoNome]);
-      });
-      listaConteudo.appendChild(li);
-  });
-}
-
-// Carregar dados e extrair a primeira coluna
-loadList(function (data) {
-  extrairPrimeiraColuna(data, drawRadarChart);
-});
-
-
-      // Função para carregar dados de um arquivo CSV
-  function loadCSV(callback) {
-    d3.csv("./data/DatasetResidentes2.csv", function(data) {
-
-      var primeiraLinha = data[0];
-
-      // Formatar os dados conforme esperado pelo gráfico de radar
-      var formattedData = data.map(function(d) {
-        return {
-          className: primeiraLinha.nome,
-          axes: [
-            {axis: "0 - 19", value: +d['0-19']},
-            {axis: "20 - 39", value: +d['20-39']},
-            {axis: "40 - 59", value: +d['40-59']},
-            {axis: "60 - 79", value: +d['60-79']},
-            {axis: "80+", value: +d['80+']}
-          ]
-        };
-      });
-      
-      callback(formattedData);
-      console.log(formattedData[0].className)
-      console.log(formattedData.map(item => item.className));
-    });
-
-  }
-
-  // Função para desenhar o gráfico de radar com os dados carregados
-  function drawRadarChart(data) {
-    RadarChart.defaultConfig.levelTick = true;
-
-    console.log("Dados recebidos:", data);
-
-    d3.select(".chart-container").html("");
-
-    console.log("Desenhando gráfico com dados:", data);
-    
-    RadarChart.draw(".chart-container", data);
-  }
-  
-  
-
-  // Carregar dados e desenhar o gráfico de radar
-  loadCSV(drawRadarChart);
