@@ -3,12 +3,10 @@ const geoMap = "https://gisco-services.ec.europa.eu/distribution/v2/nuts/geojson
 const natMort = "data/NatalidadeMortalidade.csv";
 const demographics = "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world_population.csv";
 
-
 // The svg
 let svg = d3.select("#mapa"),
 width = +svg.attr("width"),
 height = +svg.attr("height");
-
 
 // Map and projection
 // info: https://github.com/d3/d3-geo/blob/v3.0.1/README.md#geoPath
@@ -35,8 +33,8 @@ let promises = [
         return {
             nome: d.nome,
             codigo: "PT" + d.codigo,
-            tbn: +d.tbn.replace(" ", "").replace(",", "."),
-            tbm: +d.tbm.replace(" ", "").replace(",", ".")
+            tbn: +d.tbn,
+            tbm: +d.tbm
         };
     })
     ];
@@ -46,20 +44,21 @@ Promise.all(promises).then(draw_map);
 
 function createPattern(defs, line) {
   const pattern = defs.append("pattern")
-  .attr("id", "pattern_" + line.codigo)
-  .attr("patternUnits", "userSpaceOnUse")
-  .attr("width", line.tbn)
-  .attr("height", line.tbn);
+    .attr("id", "pattern_" + line.codigo)
+    .attr("patternUnits", "userSpaceOnUse")
+    .attr("width", line.tbn)
+    .attr("height", line.tbn);
 
   pattern.append("circle")
-  .attr("cx", line.tbn / 2)
-  .attr("cy", line.tbn / 2)
-  .attr("r", function() {
-      return d3.scaleThreshold()
-      .domain([6, 7, 8, 9])
-      .range([line.tbn / 8, line.tbn / 6, line.tbn / 4, line.tbn / 3])(line.tbn);
-  })
-  .attr("fill", "#f2f2f2");
+    .attr("cx", line.tbn / 2)
+    .attr("cy", line.tbn / 2)
+    .attr("r", function() {
+      let radiusScale = d3.scaleThreshold()
+        .domain([6, 7, 8, 9])
+        .range([0.5, 1.5, 2.5, 3.5]);
+      return radiusScale(line.tbn);
+    })
+    .attr("fill", "#f2f2f2");
 }
 
 
@@ -71,7 +70,10 @@ function draw_map(data) {
     createPattern(defs, line); // criar padrão com base nos dados de TBN
   });
 
+  console.log(data[1])
+
   let region = svg.append("g");
+
 
   region.selectAll("path") // desenha o mapa
         .data(data[0]['features']) // mapa com as formas
@@ -90,11 +92,12 @@ function draw_map(data) {
         .attr("stroke", "#F2F2F2")
         .attr("stroke-width", 1);
 
+
   region.selectAll("path")
-        .data(data[0]['features']) // Map with the shapes
+        .data(data[0]['features']) // mapa com as formas
         .enter()
         .filter(function (d) {
-            return d.properties.NUTS_ID.startsWith("PT"); // Draw only the countries with codes starting with "PT"
+            return d.properties.NUTS_ID.startsWith("PT");
         })
         .append("path")
         .attr("d", d3.geoPath().projection(projection))
