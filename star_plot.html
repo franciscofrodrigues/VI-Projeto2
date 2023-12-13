@@ -11,14 +11,25 @@
 </head>
 
 <body>
-
+  
   <ul id="listaConteudo"></ul>
   <div class="chart-container"></div>
-
+  
   <script>
+    var params = location.href.split('?')[1].split('&');
+    paramData = {};
+    for (x in params)
+    {
+      paramData[params[x].split('=')[0]] = params[x].split('=')[1];
+    }
+    
+    console.log(paramData)
+    
+    
+    
     RadarChart.defaultConfig.color = function () { };
     RadarChart.defaultConfig.radius = 3;
-
+    
     // Função para carregar dados de um arquivo CSV
     function loadList(callback) {
       d3.csv("./data/DatasetResidentes2.csv", function (data) {
@@ -26,14 +37,15 @@
         callback(data);
       });
     }
-
+    
     // Função para extrair a primeira coluna do CSV
     function extrairPrimeiraColuna(data, callback) {
       // Obtém os valores da primeira coluna
+      console.log(data)
       var primeiraColuna = data.map(function (d) {
         return d.nome;
       });
-
+      
       // Imprime os valores na página
       var listaConteudo = document.getElementById('listaConteudo');
       primeiraColuna.forEach(function (valor) {
@@ -44,7 +56,7 @@
           var dadosDoNome = data.find(function (item) {
             return item.nome === valor;
           });
-
+          
           // Atualiza o gráfico de radar
           drawRadarChart([dadosDoNome]);
         });
@@ -58,48 +70,48 @@
     // Função para carregar dados de um arquivo CSV
     function loadCSV(callback) {
       d3.csv("./data/DatasetResidentes2.csv", function (data) {
-
+        
         var primeiraLinha = data[0];
-
+        
         // Formatar os dados conforme esperado pelo gráfico de radar
         var formattedData = data.map(function (d) {
           return {
             className: d.nome,
             axes: [
-              { axis: "0 - 19", value: parseInt(+d['0-19']) },
-              { axis: "20 - 39", value: parseInt(+d['20-39']) },
-              { axis: "40 - 59", value: parseInt(+d['40-59']) },
-              { axis: "60 - 79", value: parseInt(+d['60-79']) },
-              { axis: "80+", value: parseInt(+d['80+']) }
+            { axis: "0 - 19", value: parseInt(+d['0-19']) },
+            { axis: "20 - 39", value: parseInt(+d['20-39']) },
+            { axis: "40 - 59", value: parseInt(+d['40-59']) },
+            { axis: "60 - 79", value: parseInt(+d['60-79']) },
+            { axis: "80+", value: parseInt(+d['80+']) }
             ]
           };
         });
-
+        
         callback(formattedData);
         console.log(formattedData[0].className)
         console.log(formattedData.map(item => item.className));
       });
     }
-
+    
     // Função para desenhar o gráfico de radar com os dados carregados
     function drawRadarChart(data) {
       RadarChart.defaultConfig.levelTick = true;
-
+      
       console.log("Dados recebidos:", data);
-
+      
       d3.select(".chart-container").html("");
-
+      
       console.log("Desenhando gráfico com dados:", data);
-
+      
       RadarChart.draw(".chart-container", data);
     }
-
-
-
+    
+    
+    
     // Carregar dados e desenhar o gráfico de radar
     loadCSV(drawRadarChart);
   </script>
-
+  
 </body>
 
 </html>

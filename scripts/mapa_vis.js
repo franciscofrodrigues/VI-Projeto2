@@ -13,7 +13,7 @@ let path = d3.geoPath();
 
 // info: https://github.com/d3/d3-geo#projections
 let projection = d3.geoMercator()
-.scale(5000)
+.scale(7000)
 .center([-8, 39.5])   
 .translate([width / 2, height / 2]);
 
@@ -36,7 +36,7 @@ let promises = [
       tbm: +d.tbm
     };
   })
-  ];
+];
 
 Promise.all(promises).then(draw_map);
 
@@ -47,7 +47,7 @@ function createPattern(defs, line) {
   .attr("patternUnits", "userSpaceOnUse")
   .attr("width", line.tbn)
   .attr("height", line.tbn);
-
+  
   pattern.append("circle")
   .attr("cx", line.tbn / 2)
   .attr("cy", line.tbn / 2)
@@ -62,45 +62,45 @@ function createPattern(defs, line) {
 
 
 function draw_map(data) {
-
+  
   const defs = svg.append("defs"); // criação dos padrões
-
+  
   data[1].forEach(function (line) {
     createPattern(defs, line); // criar padrão com base nos dados de TBN
   });
-
+  
   let region = svg.append("g");
-
+  
   region.selectAll("path") // desenha o mapa
-        .data(data[0]['features']) // mapa com as formas
-        .enter()
-        .filter(function (d){
-            return d.properties.NUTS_ID.startsWith("PT"); // desenhar apenas os países com códigos que começam com "PT"
-          })
-        .append("path")
-        .attr("d", d3.geoPath().projection(projection)) // desenha cada país consoante a projecção definida
-        .attr("fill", function (d) { // define a cor consoante a TBM
-            let line = data[1].find(o => o.codigo === d.properties.NUTS_ID) // ir buscar a linha correspondente ao país
-            if (line) {
-              return colorScale(line['tbm']);
-            }            
-          })
-        .attr("stroke", "#F2F2F2")
-        .attr("stroke-width", 1);
-
-
-        region.selectAll("path")
-        .data(data[0]['features']) // mapa com as formas
-        .enter()
-        .filter(function (d) {
-          return d.properties.NUTS_ID.startsWith("PT"); // desenhar apenas os países com códigos que começam com "PT"
-        })
-        .append("path")
-        .attr("d", d3.geoPath().projection(projection))
-        .attr("fill", function (d) {
-          let line = data[1].find(o => o.codigo === d.properties.NUTS_ID);
-          if (line) {
-            return "url(#pattern_" + line.codigo + ")";
-          }
-        });
-      }
+  .data(data[0]['features']) // mapa com as formas
+  .enter()
+  .filter(function (d){
+    return d.properties.NUTS_ID.startsWith("PT"); // desenhar apenas os países com códigos que começam com "PT"
+  })
+  .append("path")
+  .attr("d", d3.geoPath().projection(projection)) // desenha cada país consoante a projecção definida
+  .attr("fill", function (d) { // define a cor consoante a TBM
+    let line = data[1].find(o => o.codigo === d.properties.NUTS_ID) // ir buscar a linha correspondente ao país
+    if (line) {
+      return colorScale(line['tbm']);
+    }            
+  })
+  .attr("stroke", "#F2F2F2")
+  .attr("stroke-width", 1);
+  
+  
+  region.selectAll("path")
+  .data(data[0]['features']) // mapa com as formas
+  .enter()
+  .filter(function (d) {
+    return d.properties.NUTS_ID.startsWith("PT"); // desenhar apenas os países com códigos que começam com "PT"
+  })
+  .append("path")
+  .attr("d", d3.geoPath().projection(projection))
+  .attr("fill", function (d) {
+    let line = data[1].find(o => o.codigo === d.properties.NUTS_ID);
+    if (line) {
+      return "url(#pattern_" + line.codigo + ")";
+    }
+  });
+}
