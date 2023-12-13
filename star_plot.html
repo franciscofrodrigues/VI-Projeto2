@@ -16,14 +16,14 @@
   <div class="chart-container"></div>
   
   <script>
-    var params = location.href.split('?')[1].split('&');
-    paramData = {};
-    for (x in params)
-    {
-      paramData[params[x].split('=')[0]] = params[x].split('=')[1];
-    }
+    // var params = location.href.split('?')[1].split('&');
+    // paramData = {};
+    // for (x in params)
+    // {
+    //   paramData[params[x].split('=')[0]] = params[x].split('=')[1];
+    // }
     
-    console.log(paramData)
+    // console.log(paramData)
     
     
     
@@ -70,19 +70,21 @@
     // Função para carregar dados de um arquivo CSV
     function loadCSV(callback) {
       d3.csv("./data/DatasetResidentes2.csv", function (data) {
-        
+
         var primeiraLinha = data[0];
+
+        console.log(primeiraLinha)
         
         // Formatar os dados conforme esperado pelo gráfico de radar
         var formattedData = data.map(function (d) {
           return {
             className: d.nome,
             axes: [
-            { axis: "0 - 19", value: parseInt(+d['0-19']) },
-            { axis: "20 - 39", value: parseInt(+d['20-39']) },
-            { axis: "40 - 59", value: parseInt(+d['40-59']) },
-            { axis: "60 - 79", value: parseInt(+d['60-79']) },
-            { axis: "80+", value: parseInt(+d['80+']) }
+            { axis: "0 - 19", value: parseInt(primeiraLinha['0-19']) },
+            { axis: "20 - 39", value: parseInt(primeiraLinha['20-39']) },
+            { axis: "40 - 59", value: parseInt(primeiraLinha['40-59']) },
+            { axis: "60 - 79", value: parseInt(primeiraLinha['60-79']) },
+            { axis: "80+", value: parseInt(primeiraLinha['80+']) }
             ]
           };
         });
