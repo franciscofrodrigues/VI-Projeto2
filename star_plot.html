@@ -66,6 +66,7 @@
     // Carregar dados e extrair a primeira coluna
     loadList(function (data) {
       extrairPrimeiraColuna(data, drawRadarChart);
+
     });
     // Função para carregar dados de um arquivo CSV
     function loadCSV(callback) {
@@ -80,11 +81,11 @@
           return {
             className: d.nome,
             axes: [
-            { axis: "0 - 19", value: parseInt(primeiraLinha['0-19']) },
-            { axis: "20 - 39", value: parseInt(primeiraLinha['20-39']) },
-            { axis: "40 - 59", value: parseInt(primeiraLinha['40-59']) },
-            { axis: "60 - 79", value: parseInt(primeiraLinha['60-79']) },
-            { axis: "80+", value: parseInt(primeiraLinha['80+']) }
+            { axis: "0 - 19", value: parseInt(d['0-19']) },
+            { axis: "20 - 39", value: parseInt(d['20-39']) },
+            { axis: "40 - 59", value: parseInt(d['40-59']) },
+            { axis: "60 - 79", value: parseInt(d['60-79']) },
+            { axis: "80+", value: parseInt(d['80+']) }
             ]
           };
         });
@@ -95,18 +96,23 @@
       });
     }
     
-    // Função para desenhar o gráfico de radar com os dados carregados
     function drawRadarChart(data) {
-      RadarChart.defaultConfig.levelTick = true;
-      
-      console.log("Dados recebidos:", data);
-      
-      d3.select(".chart-container").html("");
-      
-      console.log("Desenhando gráfico com dados:", data);
-      
-      RadarChart.draw(".chart-container", data);
-    }
+  console.log('Data Received in drawRadarChart:', data);
+
+  // Check if the data array is not empty and has the expected structure
+  if (data && data.length > 0 && data[0].axes) {
+    RadarChart.defaultConfig.levelTick = true;
+
+    console.log("Desenhando gráfico com dados:", data);
+
+    d3.select(".chart-container").html("");
+
+    RadarChart.draw(".chart-container", data);
+  } else {
+    console.error("Invalid data structure:", data);
+  }
+}
+
     
     
     

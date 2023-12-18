@@ -80,9 +80,20 @@ var RadarChart = {
           });
   
           var maxValue = Math.max(cfg.maxValue, d3.max(data, function(d) {
-            return d3.max(d.axes, function(o){ return o.value; });
+            if (d && d.axes) {
+              console.log('Axes:', d.axes); // Log the axes array for debugging
+              return d3.max(d.axes, function(o) { return o.value; });
+            } else {
+              console.error('Invalid data structure:', d);
+              return 0;
+            }
           }));
+          
           maxValue -= cfg.minValue;
+          
+          console.log('Max Value:', maxValue); // Log the calculated max value for debugging
+          
+          console.log('maxValue', maxValue)
   
           var allAxis = data[0].axes.map(function(i, j){ return {name: i.axis, xOffset: (i.xOffset)?i.xOffset:0, yOffset: (i.yOffset)?i.yOffset:0}; });
           var total = allAxis.length;
