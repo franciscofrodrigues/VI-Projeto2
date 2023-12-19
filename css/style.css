@@ -21,21 +21,27 @@ body {
 /*Tamanho Colunas*/
 .left-column, .right-column {
 	width: 20%;
+	height: 92%;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
 
-/*Coluna Esquerda*/
-.text{
-	position:absolute;
+.left-column {
+	position: absolute;
 	top: 4%;
 	left: 4%;
 }
 
-.chart{
-	position:absolute;
-	bottom: 40%;
-	left: 4%;
+.right-column {
+	position: absolute;
+	top: 4%;
+	right: 4%;
+}
 
-	width: 20%;
+/*Coluna Esquerda*/
+.chart{
 	text-align: center;
 
 	display: flex;
@@ -56,12 +62,11 @@ hr {
 }
 
 /*Coluna Direita*/
-.scales{
-	position:absolute;
-	bottom: 40%;
-	right: 4%;
+#selectedInfo {
+	text-align: left;
+}
 
-	width: 20%;
+.scales{
 	text-align: center;
 
 	display: flex;
