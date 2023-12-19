@@ -8,118 +8,27 @@
     <script src="https://d3js.org/d3.v6.min.js"></script>
 </head>
 
+<style>
+    .tooltip {
+      position: absolute;
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 10px;
+      display: none;
+      pointer-events: none;
+    }
+  </style>
+
 <body>
 
     <!-- Adiciona uma caixa de seleção para escolher o país -->
     <select id="nomeSelector" onchange="updateRadarChart()"></select>
 
-    <script>
-        var csvData;
+    <div id="radarChart"></div>
 
-        // Função para atualizar o gráfico de radar com base na seleção do usuário
-        function updateRadarChart() {
-            var selectedNome = document.getElementById('nomeSelector').value;
+    <div id="tooltip" class="tooltip"></div>
 
-            // Encontra os dados correspondentes ao país selecionado
-            var selectedData = csvData.find(function (d) {
-                return d.nome === selectedNome;
-            });
-
-            // Remove o gráfico anterior se existir
-            d3.select('svg').remove();
-
-            // Configuração do radar chart
-            var margin = { top: 50, right: 50, bottom: 50, left: 50 },
-                width = 400 - margin.left - margin.right,
-                height = 400 - margin.top - margin.bottom;
-
-            // Configuração do SVG
-            var svg = d3.select('body').append('svg')
-                .attr('width', width + margin.left + margin.right)
-                .attr('height', height + margin.top + margin.bottom)
-                .append('g')
-                .attr('transform', 'translate(' + (width / 2 + margin.left) + ',' + (height / 2 + margin.top) + ')');
-
-            // Número de variáveis (número de lados no radar chart)
-            var numVars = 5;  // número de faixas etárias no seu exemplo
-
-            // Angulo de cada eixo no radar chart
-            var angleSlice = Math.PI * 2 / numVars;
-
-            // Configuração da escala radial
-            var rScale = d3.scaleLinear()
-                .range([0, width / 2]);
-
-            // Linhas do radar chart
-            var radarLine = d3.lineRadial()
-                .curve(d3.curveLinearClosed)
-                .radius(function (d) { return rScale(d); })
-                .angle(function (d, i) { return i * angleSlice; });
-
-            // Adiciona os eixos
-            var eixos = svg.selectAll('.axis')
-                .data(Object.keys(selectedData).filter(key => key !== "codigo" && key !== "nome"))
-                .enter()
-                .append('g')
-                .attr('class', 'axis');
-
-            // Adiciona as linhas dos eixos
-            eixos.append('line')
-                .attr('x1', 0)
-                .attr('y1', 0)
-                .attr('x2', function (d, i) { return rScale.range()[1] * Math.cos(angleSlice * i - Math.PI / 2); })
-                .attr('y2', function (d, i) { return rScale.range()[1] * Math.sin(angleSlice * i - Math.PI / 2); })
-                .attr('class', 'axisLine');
-
-                // Adiciona os eixos
-var eixos = svg.selectAll('.axis')
-.data(Object.keys(selectedData).filter(key => key !== "codigo" && key !== "nome"))
-
-    .enter()
-    .append('g')
-    .attr('class', 'axis');
-
-eixos.append('line')
-    .attr('class', 'axisLine')
-    .attr('x1', 0)
-    .attr('y1', 0)
-    .attr('x2', function (d, i) { return rScale(valores[i]) * Math.cos(angleSlice * i - Math.PI / 2); })
-    .attr('y2', function (d, i) { return rScale(valores[i]) * Math.sin(angleSlice * i - Math.PI / 2); });
-
-
-
-            // Lê os dados do CSV e cria o radar chart
-            var faixasEtarias = Object.keys(selectedData).filter(key => key !== "codigo" && key !== "nome");
-            var valores = faixasEtarias.map(key => +selectedData[key]); // Converte os valores para números
-
-            // Atualiza a escala radial com base nos novos valores
-            rScale.domain([0, d3.max(valores)]);
-
-            // Adiciona os paths
-svg.append('path')
-    .attr('class', 'radarLine')
-    .datum(valores)
-    .attr('d', radarLine)
-    .style('stroke', 'blue')
-    .style('fill', 'blue')
-    .style('fill-opacity', 0.2);
-        }
-
-        // Lê o arquivo CSV para obter a lista de países
-        d3.csv('./data/DatasetResidentes2.csv').then(function (data) {
-            csvData = data;  // Armazena os dados globalmente
-
-            // Adiciona as opções à caixa de seleção
-            var selector = document.getElementById('nomeSelector');
-            data.forEach(function (d) {
-                var option = document.createElement('option');
-                option.value = d.nome;
-                option.text = d.nome;
-                selector.add(option);
-            });
-        });
-
-    </script>
+    <script type="text/javascript" src="./scripts/star_plot2.js"></script>
 
 </body>
 
