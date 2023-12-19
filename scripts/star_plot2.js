@@ -118,7 +118,7 @@ eixos.append('text')
 }
 
 // Lê o arquivo CSV para obter a lista de países
-d3.csv('./data/DatasetResidentes2.csv').then(function (data) {
+d3.csv('./data/DatasetResidentes3.csv').then(function (data) {
     csvData = data;  // Armazena os dados globalmente
 
     // Adiciona as opções à caixa de seleção
