@@ -74,3 +74,14 @@ hr {
 	align-items: center;
 }
 
+/*quando passamos o rato por cima do radar plot*/
+.tooltip {
+	position: absolute;
+	background: #fff;
+	border: 1px solid #ccc;
+	padding: 10px;
+	display: none;
+	pointer-events: none;
+  }
+
+

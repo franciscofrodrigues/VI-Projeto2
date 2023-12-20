@@ -18,6 +18,9 @@
 
 <body>
 
+  <!-- Adiciona uma caixa de seleção para escolher o país -->
+  <select id="nomeSelector" onchange="updateRadarChart()" style="display: block;"></select>
+
   <!-- Coluna à esquerda -->
   <div class="left-column">
     <div class="text">
@@ -37,7 +40,9 @@
       </h4>
       <hr>
       <div class="chart-container">
-        <a href="star_plot.html">Gráfico População Residente</a>
+        <div id="radarChart"></div>
+
+        <div id="tooltip" class="tooltip"></div>
       </div> <!-- Onde é colocado o Star Plot -->
     </div>
     <div></div> <!-- Criar espaço inferior -->
@@ -64,9 +69,10 @@
     <div></div> <!-- Criar espaço inferior -->
   </div>
 
-<script type="text/javascript" src="scripts/mapa_vis.js"></script>
-<!-- <script type="text/javascript" src="./scripts/star_plot.js"></script> -->
-<!-- <script type="text/javascript" src="scripts/lay_map.js"></script> -->
+  <script type="text/javascript" src="scripts/mapa_vis.js"></script>
+  <script type="text/javascript" src="./scripts/star_plot2.js"></script>
+  <!-- <script type="text/javascript" src="./scripts/star_plot.js"></script> -->
+  <!-- <script type="text/javascript" src="scripts/lay_map.js"></script> -->
 </body>
 
 </html>
