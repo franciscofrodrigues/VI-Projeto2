@@ -98,41 +98,72 @@ function draw_map(data) {
       if (line) {
         return "url(#pattern_" + line.codigo + ")";
       }
-    })
-    .on('mouseover', function() {
-      const line = data[1].find(o => o.codigo === codigo);
-      let tbnValue, tbmValue, regionName = '';
-      if (line) {
-        regionName = line.nome;
-        tbnValue = line.tbn;
-        tbmValue = line.tbm;
-      }
-    console.log(regionName);
-
-      d3.select("#tbnH4").text('Taxa Bruta de Natalidade – '+tbnValue);
-      d3.select("#tbmH4").text('Taxa Bruta de Mortalidade – '+tbmValue);
-      d3.select("#regionSelected").text(regionName);
-      d3.select("#regionSelected2").text(regionName);
-      handleMapMouseOver(regionName);
-      svg.selectAll(".region").attr("opacity", 0.4);
-      d3.select(this.parentNode).select(".region").attr("opacity", 1);
-    })
-    .on('mouseout', function() {
-      d3.select("#tbnH4").text('');
-      d3.select("#tbmH4").text('');
-      d3.select("#regionSelected").text('');
-      d3.select("#regionSelected2").text('Portugal Continental');
-
-      svg.selectAll(".region").attr("opacity", 1);
-
-      handleMapMouseOver('Portugal Continental');
     });
-  });
+    // .on('mouseover', function(e) {
+    //   const line = data[1].find(o => o.codigo === codigo);
+    //   let tbnValue, tbmValue, regionName = '';
+    //   if (line) {
+    //     regionName = line.nome;
+    //     tbnValue = line.tbn;
+    //     tbmValue = line.tbm;
+    //   }
+
+    //   d3.select("#tbnH4").text('Taxa Bruta de Natalidade – '+tbnValue);
+    //   d3.select("#tbmH4").text('Taxa Bruta de Mortalidade – '+tbmValue);
+    //   d3.select("#regionSelected").text(regionName);
+    //   d3.select("#regionSelected2").text(regionName);
+    //   handleMapMouseOver(regionName);
+    //   svg.selectAll(".region").attr("opacity", 0.4);
+    //   d3.select(e.target.parentNode).select(".region").attr("opacity", 1);
+    // })
+    // .on('mouseout', function() {
+    //   d3.select("#tbnH4").text('');
+    //   d3.select("#tbmH4").text('');
+    //   d3.select("#regionSelected").text('');
+    //   d3.select("#regionSelected2").text('Portugal Continental');
+
+    //   svg.selectAll(".region").attr("opacity", 1);
+
+    //   handleMapMouseOver('Portugal Continental');
+    // });
+    });
+
+    d3.select('body')
+    .on('click', function(e) {
+
+      let targetSelected = e.target; // local onde ocorreu o clique
+      let targetClass = e.target.classList; // verificar se o clique foi feito numa das regiões ou fora
+
+      const codigoTarget = d3.select(targetSelected.parentNode).attr('class'); //verificar o código da região selecionada
+
+      if(e.target.classList.contains('pattern')) { // se o clique se deu numa das re 
+
+        const line = data[1].find(o => o.codigo === codigoTarget); // recolher dados da região selecionada
+        let tbnValue, tbmValue, regionName = '';
+        if (line) {
+          regionName = line.nome;
+          tbnValue = line.tbn;
+          tbmValue = line.tbm;
+        }
+
+        // alterar texto (html) para o da região selecionada
+        d3.select("#tbnH4").text('Taxa Bruta de Natalidade – '+tbnValue);
+        d3.select("#tbmH4").text('Taxa Bruta de Mortalidade – '+tbmValue);
+        d3.select("#regionSelected").text(regionName);
+        d3.select("#regionSelected2").text(regionName);
+        handleMapMouseOver(regionName);
+
+        svg.selectAll(".region").attr("opacity", 0.4); // trocar opacidade das restantes
+        d3.select(targetSelected.parentNode).select(".region").attr("opacity", 1); // região selecionada com opacidade máxima
+      } else {
+        svg.selectAll(".region").attr("opacity", 1); // se o clique se deu fora de uma das regiões 
+      }
+
+    });
 }
 
 function handleMapMouseOver(regionName) {
-  // Atualize o valor da região no arquivo do gráfico de radar
-  updateRadarChart(regionName);
+  updateRadarChart(regionName); // Atualizar o valor da região no arquivo do gráfico de radar
 }
 
 
