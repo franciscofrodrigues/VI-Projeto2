@@ -15,7 +15,7 @@ function updateRadarChart(regionName) {
 
 
   // Configuração do radar chart
-  var margin = { top: 100, right: 50, bottom: 50, left: 50 },
+  var margin = { top: 50, right: 50, bottom: 50, left: 50},
     width = 300,
     height = 300;
 
@@ -134,8 +134,8 @@ function updateRadarChart(regionName) {
     .datum(valores)
     .attr('d', radarLine)
     .style('stroke', 'black')
-    .style('fill', 'blue')
-    .style('fill-opacity', 0.2)
+    .style('fill', '#9699D9')
+    .style('fill-opacity', 0.5)
     .style('stroke-width', 2);  // Adicione a largura da borda
 }
 
