@@ -82,9 +82,9 @@ hr {
 /*quando passamos o rato por cima do radar plot*/
 .tooltip {
 	position: absolute;
-	background: #fff;
-	border: 1px solid #ccc;
-	padding: 10px;
+	background: #b8b8b8;
+	border-radius: 5%;
+	padding: 5px;
 	display: none;
 	pointer-events: none;
 }

@@ -44,7 +44,7 @@ function updateRadarChart(containerId, data) {
   
     eixos.append('circle')
       .attr('class', 'axisMarker')
-      .attr('r', 2)
+      .attr('r', 3)
       .attr('cx', function (d, i) { return rScale(valores[i]) * Math.cos(angleSlice * i - Math.PI / 2); })
       .attr('cy', function (d, i) { return rScale(valores[i]) * Math.sin(angleSlice * i - Math.PI / 2); })
       .on('mouseover', function (d, i) {
@@ -84,7 +84,7 @@ function updateRadarChart(containerId, data) {
       .style('fill-opacity', 0.2)
       .style('stroke-width', 2);
   
-    // Adiciona título ao gráfico com o nome associado
+    // Adiciona título ao gráfico com o nome associado e numero total de habitantes
     svg.append('text')
       .attr('x', 0)
       .attr('y', -height / 2 - margin.top / 3)
@@ -98,8 +98,8 @@ function updateRadarChart(containerId, data) {
       .attr('y', -height / 2 - margin.top / 5)
       .attr('text-anchor', 'middle')
       .style('font-style', 'bold')
-      .style('font-size', '120%')
-      .text('Total de habitantes: ', total);
+      .style('font-size', '100%')
+      .text('Total de Habitantes: '+ total);
   }
   
   // Lê o arquivo CSV para obter a lista de países
