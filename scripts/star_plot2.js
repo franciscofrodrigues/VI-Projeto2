@@ -1,28 +1,38 @@
+
+
 var csvData;
 
 // Função para atualizar o gráfico de radar com base na seleção do utilizador
-function updateRadarChart() {
-  var selectedNome = document.getElementById('regionSelected').value;
-
-  // Encontra os dados correspondentes ao país selecionado
+function updateRadarChart(regionName) {
   var selectedData = csvData.find(function (d) {
-    return d.nome === selectedNome;
+    return d.nome === regionName;
   });
 
+  console.log('selectedData',selectedData);
+
   // Remove o gráfico anterior se existir
-  d3.select('radarChart').select('svg').remove();
+  d3.select('#radarChart svg').remove();
+
 
   // Configuração do radar chart
-  var margin = { top: 650, right: 50, bottom: 50, left: 50},
+  var margin = { top: 100, right: 50, bottom: 50, left: 50},
     width = 300,
     height = 300;
 
   // Configuração do SVG
-  var svg = d3.select('body').append('svg')
+  var svg = d3.select('#radarChart svg');
+
+if (svg.empty()) {
+  // Criar SVG apenas se não existir
+  svg = d3.select('#radarChart').append('svg')
     .attr('width', width + margin.left + margin.right)
     .attr('height', height + margin.top + margin.bottom)
     .append('g')
     .attr('transform', 'translate(' + (width / 2 + margin.left) + ',' + (height / 2 + margin.top) + ')');
+} else {
+  // Limpar conteúdo anterior (se necessário)
+  svg.selectAll('*').remove();
+}
 
   // Número de variáveis (número de lados no radar chart)
   var numVars = 5;  // número de faixas etárias no seu exemplo
@@ -128,13 +138,9 @@ function updateRadarChart() {
 // Lê o arquivo CSV para obter a lista de países
 d3.csv('./data/DatasetResidentes3.csv').then(function (data) {
   csvData = data;  // Armazena os dados globalmente
-
-  // Adiciona as opções à caixa de seleção
-  var selector = document.getElementById('regionSelected');
-  data.forEach(function (d) {
-    var option = document.createElement('option');
-    option.value = d.nome;
-    option.text = d.nome;
-    selector.add(option);
-  });
+  
+  if (data.length > 0) {
+    var primeiraRegiao = data[0].nome;
+    updateRadarChart(primeiraRegiao);
+  }
 });

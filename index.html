@@ -17,9 +17,7 @@
 
 <body>
 
-  <!-- Adiciona uma caixa de seleção para escolher o país RETIRAR E METER COM O MAPA -->
-  <select id="nomeSelector" onchange="updateRadarChart()" style="display: block;"></select>
-
+  
   <!-- Coluna à esquerda -->
   <div class="left-column">
     <div class="text">
@@ -35,7 +33,7 @@
       <h4 class="regular">
         População por faixa etária
         <br>
-        <span class="light">em Portugal</span>
+        <span id="regionSelected2" class="light">em Portugal</span>
       </h4>
       <hr>
       <!-- para mostrar o radar chart -->
@@ -70,7 +68,7 @@
   </div>
 
   <script type="text/javascript" src="scripts/mapa_vis.js"></script>
-  <script type="text/javascript" src="./scripts/star_plot2.js"></script>
+  <script type="text/javascript" src="scripts/star_plot2.js"></script>
 
   <!-- <script type="text/javascript" src="scripts/lay_map.js"></script> -->
 </body>

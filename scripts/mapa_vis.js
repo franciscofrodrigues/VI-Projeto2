@@ -107,12 +107,13 @@ function draw_map(data) {
         tbnValue = line.tbn;
         tbmValue = line.tbm;
       }
-
+    console.log(regionName);
 
       d3.select("#tbnH4").text('Taxa Bruta de Natalidade – '+tbnValue);
       d3.select("#tbmH4").text('Taxa Bruta de Mortalidade – '+tbmValue);
       d3.select("#regionSelected").text(regionName);
-
+      d3.select("#regionSelected2").text(regionName);
+      handleMapMouseOver(regionName);
       svg.selectAll(".region").attr("opacity", 0.4);
       d3.select(this.parentNode).select(".region").attr("opacity", 1);
     })
@@ -125,6 +126,18 @@ function draw_map(data) {
     });
   });
 }
+
+function handleMapMouseOver(regionName) {
+  // Atualize o valor da região no arquivo do gráfico de radar
+  updateRadarChart(regionName);
+}
+
+
+
+
+
+
+
 
 
 
