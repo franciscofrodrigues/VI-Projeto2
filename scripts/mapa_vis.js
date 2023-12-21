@@ -157,6 +157,13 @@ function draw_map(data) {
         d3.select(targetSelected.parentNode).select(".region").attr("opacity", 1); // região selecionada com opacidade máxima
       } else {
         svg.selectAll(".region").attr("opacity", 1); // se o clique se deu fora de uma das regiões 
+
+        // alterar texto (html) para Portugal Continental
+        d3.select("#tbnH4").text('');
+        d3.select("#tbmH4").text('');
+        d3.select("#regionSelected").text('');
+        d3.select("#regionSelected2").text('Portugal Continental');
+        handleMapMouseOver('Portugal Continental'); // reset radar chart
       }
 
     });
