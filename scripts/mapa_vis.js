@@ -121,8 +121,11 @@ function draw_map(data) {
       d3.select("#tbnH4").text('');
       d3.select("#tbmH4").text('');
       d3.select("#regionSelected").text('');
+      d3.select("#regionSelected2").text('Portugal Continental');
 
       svg.selectAll(".region").attr("opacity", 1);
+
+      handleMapMouseOver('Portugal Continental');
     });
   });
 }

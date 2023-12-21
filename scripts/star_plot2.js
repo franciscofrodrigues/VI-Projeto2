@@ -15,7 +15,7 @@ function updateRadarChart(regionName) {
 
 
   // Configuração do radar chart
-  var margin = { top: 100, right: 50, bottom: 50, left: 50},
+  var margin = { top: 50, right: 50, bottom: 50, left: 50},
     width = 300,
     height = 300;
 
@@ -85,7 +85,7 @@ if (svg.empty()) {
   // Adiciona os marcadores (pontos) nos eixos
   eixos.append('circle')
     .attr('class', 'axisMarker')
-    .attr('r', 2)  // raio do marcador
+    .attr('r', 3)  // raio do marcador
     .attr('cx', function (d, i) { return rScale(valores[i]) * Math.cos(angleSlice * i - Math.PI / 2); })
     .attr('cy', function (d, i) { return rScale(valores[i]) * Math.sin(angleSlice * i - Math.PI / 2); })
     .on('mouseover', function (d, i) {
@@ -129,8 +129,8 @@ if (svg.empty()) {
     .datum(valores)
     .attr('d', radarLine)
     .style('stroke', 'black')
-    .style('fill', 'blue')
-    .style('fill-opacity', 0.2)
+    .style('fill', '#9699D9')
+    .style('fill-opacity', 0.5)
     .style('stroke-width', 2);  // Adicione a largura da borda
 }
 
