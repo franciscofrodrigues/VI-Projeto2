@@ -4,7 +4,6 @@
 <head>
   <meta charset="UTF-8">
   <script type="text/javascript" src="https://d3js.org/d3.v6.min.js"></script>
-  <!-- <script type="text/javascript" src="//d3js.org/d3.v3.js"></script> -->
   <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,13 +11,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="./css/star_plot.css">
+
   <title>Mapa</title>
 </head>
 
 <body>
 
-  <!-- Adiciona uma caixa de seleção para escolher o país -->
+  <!-- Adiciona uma caixa de seleção para escolher o país RETIRAR E METER COM O MAPA -->
   <select id="nomeSelector" onchange="updateRadarChart()" style="display: block;"></select>
 
   <!-- Coluna à esquerda -->
@@ -26,24 +25,25 @@
     <div class="text">
       <h2 class="regular">
         <span class="light">População Portuguesa</span>
-        <br>População Residente,
+        <br><a href="all_radar_chart.html">População Residente,</a>
         <br>Taxa Bruta de Natalidade,
         <br>Taxa Bruta de Mortalidade
       </h2>
     </div>
     <div class="chart">
-      <!-- <iframe src="http://127.0.0.1:5500/star_plot.html?abc=12343"></iframe>  -->
+
       <h4 class="regular">
         População por faixa etária
         <br>
         <span class="light">em Portugal</span>
       </h4>
       <hr>
+      <!-- para mostrar o radar chart -->
       <div class="chart-container">
         <div id="radarChart"></div>
 
         <div id="tooltip" class="tooltip"></div>
-      </div> <!-- Onde é colocado o Star Plot -->
+      </div> 
     </div>
     <div></div> <!-- Criar espaço inferior -->
   </div>
@@ -71,7 +71,7 @@
 
   <script type="text/javascript" src="scripts/mapa_vis.js"></script>
   <script type="text/javascript" src="./scripts/star_plot2.js"></script>
-  <!-- <script type="text/javascript" src="./scripts/star_plot.js"></script> -->
+
   <!-- <script type="text/javascript" src="scripts/lay_map.js"></script> -->
 </body>
 

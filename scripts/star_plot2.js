@@ -2,7 +2,7 @@ var csvData;
 
 // Função para atualizar o gráfico de radar com base na seleção do utilizador
 function updateRadarChart() {
-  var selectedNome = document.getElementById('nomeSelector').value;
+  var selectedNome = document.getElementById('regionSelected').value;
 
   // Encontra os dados correspondentes ao país selecionado
   var selectedData = csvData.find(function (d) {
@@ -130,7 +130,7 @@ d3.csv('./data/DatasetResidentes3.csv').then(function (data) {
   csvData = data;  // Armazena os dados globalmente
 
   // Adiciona as opções à caixa de seleção
-  var selector = document.getElementById('nomeSelector');
+  var selector = document.getElementById('regionSelected');
   data.forEach(function (d) {
     var option = document.createElement('option');
     option.value = d.nome;
