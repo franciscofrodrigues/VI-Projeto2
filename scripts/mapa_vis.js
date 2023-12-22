@@ -18,7 +18,7 @@ let projection = d3.geoMercator()
 let customColors = ['#9699D9', '#6A6C99', '#3E3F59', '#12121A'];
 
 let colorScale = d3.scaleThreshold()
-.domain([8, 12, 15, 18.7])
+.domain([9, 12, 15, 18])
 .range(customColors);
 
 // Carregar dados externos para o array
@@ -46,8 +46,8 @@ function createPattern(defs, domain, range, line) {
   .attr("height", 10);
 
   pattern.append("circle")
-  .attr("cx", 4)
-  .attr("cy", 4)
+  .attr("cx", 5)
+  .attr("cy", 5)
   .attr("r", function() {
     let radiusScale = d3.scaleThreshold()
     .domain(domain)
@@ -127,8 +127,8 @@ function draw_map(data) {
 
         customColors = ['#9699D9', '#9699D9', '#12121A']; // trocar as cores para ter apenas 3 (abaixo, valor região selecionada, acima)
 
-        let domainTBM = [d3.min(tbmArr), tbmValue, d3.max(tbmArr)]; // recalcular o domínio TBM para a região selecionada
-        let domainTBN = [d3.min(tbnArr), tbnValue, d3.max(tbnArr)]; // recalcular o domínio TBN para a região selecionada
+        let domainTBM = [d3.min(tbmArr)-0.1, tbmValue, d3.max(tbmArr)+0.1]; // recalcular o domínio TBM para a região selecionada
+        let domainTBN = [d3.min(tbnArr)-0.1, tbnValue, d3.max(tbnArr)+0.1]; // recalcular o domínio TBN para a região selecionada
 
         colorScale = d3.scaleThreshold()
         .domain(domainTBM)
@@ -177,7 +177,7 @@ function draw_map(data) {
         customColors = ['#9699D9', '#6A6C99', '#3E3F59', '#12121A']; // repor conforme os valores iniciais
 
         colorScale = d3.scaleThreshold()
-        .domain([8, 12, 15, 18.7])
+        .domain([9, 12, 15, 18])
         .range(customColors);
 
         const filterRegion = data[0].features.filter(d => d.properties.NUTS_ID.startsWith("PT"));
