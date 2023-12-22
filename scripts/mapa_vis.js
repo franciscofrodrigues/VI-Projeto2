@@ -154,6 +154,24 @@ function draw_map(data) {
       } else {
         svg.selectAll(".region").attr("opacity", 1); // se o clique se deu fora de uma das regiões 
 
+        customColors = ['#9699D9', '#6A6C99', '#3E3F59', '#12121A']; // repor conforme os valores iniciais
+
+        colorScale = d3.scaleThreshold()
+        .domain([8, 12, 15, 18.7])
+        .range(customColors);
+
+        const filterRegion = data[0].features.filter(d => d.properties.NUTS_ID.startsWith("PT"));
+
+        svg.selectAll(".region")
+        .data(filterRegion)
+        .attr("fill", function(d) {
+          const codigo = d.properties.NUTS_ID;
+          const line = data[1].find(o => o.codigo === codigo);
+          if (line) {
+            return colorScale(line['tbm']);
+          }
+        });
+
         // alterar texto (html) para Portugal Continental
         d3.select("#tbnH4").text('');
         d3.select("#tbmH4").text('');
