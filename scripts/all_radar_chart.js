@@ -114,4 +114,10 @@ function updateRadarChart(containerId, data) {
       updateRadarChart(containerId, d);
     });
   });
+
+  // para voltar ao inicio da pagina
+  function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
   
