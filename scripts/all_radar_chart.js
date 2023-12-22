@@ -82,7 +82,7 @@ function updateRadarChart(containerId, data) {
       .style('stroke', 'black')
       .style('fill', 'blue')
       .style('fill-opacity', 0.2)
-      .style('stroke-width', 2);
+      .style('stroke-width', 1);
   
     // Adiciona título ao gráfico com o nome associado e numero total de habitantes
     svg.append('text')
