@@ -58,7 +58,7 @@ function updateRadarChart(containerId, data) {
       var xPosition = d3.event ? d3.event.pageX : event.clientX + window.pageXOffset;
       var yPosition = d3.event ? d3.event.pageY : event.clientY + window.pageYOffset;
   
-      tooltip.html('Valor: ' + value)
+      tooltip.html(value)
         .style('left', (xPosition + 10) + 'px')
         .style('top', (yPosition - 10) + 'px')
         .style('display', 'block');
