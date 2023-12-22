@@ -100,3 +100,18 @@ hr {
 	margin-top: 2.5%;
 	margin-left: 4%;
 }
+
+.buttonBack{
+	display: fixed;
+	position: fixed;
+	margin-top: 0.5%;
+	margin-left: 0.5%;
+	
+}
+
+.buttonTop{
+	display: fixed;
+	position: fixed;
+	margin-top: 0.15%;
+	margin-left: 2.2%;
+}
