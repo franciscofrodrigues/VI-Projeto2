@@ -59,10 +59,10 @@ function createPattern(defs, domain, range, line) {
 
 
 function draw_map(data) {
-  let defs = svg.append("defs"); // Create pattern definitions
+  let defs = svg.append("defs"); // Criar padrões
 
   data[1].forEach(function(line) {
-    createPattern(defs, [6, 7, 8, 9], [0.5, 1.5, 2.5, 3.5], line); // Create pattern with TBN data
+    createPattern(defs, [6, 7, 8, 9], [0.5, 1.5, 2.5, 3.5], line); // Converter os dados em padrões
   });
 
   const region = {};
@@ -147,7 +147,7 @@ function draw_map(data) {
         });
 
         data[1].forEach(function(line) {
-          createPattern(defs, domainTBN, [1, 1, 3.5], line); // Create pattern with TBN data
+          createPattern(defs, domainTBN, [1, 1, 3.5], line);
         });
 
         svg.selectAll(".pattern")
@@ -167,8 +167,6 @@ function draw_map(data) {
         d3.select("#regionSelected2").text(regionName);
         handleMapMouseOver(regionName);
 
-
-        // svg.selectAll(".region").attr("opacity", 0.4); // trocar opacidade das restantes
         d3.select(targetSelected.parentNode).select(".region").attr("opacity", 1).attr('fill', '#6A6C99'); // região selecionada com opacidade máxima
         d3.select(targetSelected.parentNode).select(".pattern").attr("opacity", 1).attr('fill', '#6A6C99'); // região selecionada com opacidade máxima
       } else {
