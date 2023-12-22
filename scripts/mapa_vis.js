@@ -36,20 +36,22 @@ let promises = [
 
 Promise.all(promises).then(draw_map);
 
-function createPattern(defs, line) {
+function createPattern(defs, domain, range, line) {
+  defs.select("#pattern_" + line.codigo).remove();
+
   const pattern = defs.append("pattern")
   .attr("id", "pattern_" + line.codigo)
   .attr("patternUnits", "userSpaceOnUse")
-  .attr("width", line.tbn)
-  .attr("height", line.tbn);
+  .attr("width", 10)
+  .attr("height", 10);
 
   pattern.append("circle")
-  .attr("cx", line.tbn / 2)
-  .attr("cy", line.tbn / 2)
+  .attr("cx", 4)
+  .attr("cy", 4)
   .attr("r", function() {
     let radiusScale = d3.scaleThreshold()
-    .domain([6, 7, 8, 9])
-    .range([0.5, 1.5, 2.5, 3.5]);
+    .domain(domain)
+    .range(range);
     return radiusScale(line.tbn);
   })
   .attr("fill", "#F2F2F2");
@@ -57,10 +59,10 @@ function createPattern(defs, line) {
 
 
 function draw_map(data) {
-  const defs = svg.append("defs"); // Create pattern definitions
+  let defs = svg.append("defs"); // Create pattern definitions
 
   data[1].forEach(function(line) {
-    createPattern(defs, line); // Create pattern with TBN data
+    createPattern(defs, [6, 7, 8, 9], [0.5, 1.5, 2.5, 3.5], line); // Create pattern with TBN data
   });
 
   const region = {};
@@ -120,14 +122,16 @@ function draw_map(data) {
         }
 
 
-        var tbmArr = data[1].map(d => d.tbm);
+        let tbmArr = data[1].map(d => d.tbm);
+        let tbnArr = data[1].map(d => d.tbn);
 
         customColors = ['#9699D9', '#9699D9', '#12121A']; // trocar as cores para ter apenas 3 (abaixo, valor região selecionada, acima)
 
-        let domain = [d3.min(tbmArr), tbmValue, d3.max(tbmArr)]; // recalcular o domínio para a região selecionada
+        let domainTBM = [d3.min(tbmArr), tbmValue, d3.max(tbmArr)]; // recalcular o domínio TBM para a região selecionada
+        let domainTBN = [d3.min(tbnArr), tbnValue, d3.max(tbnArr)]; // recalcular o domínio TBN para a região selecionada
 
         colorScale = d3.scaleThreshold()
-        .domain(domain)
+        .domain(domainTBM)
         .range(customColors);
 
         const filterRegion = data[0].features.filter(d => d.properties.NUTS_ID.startsWith("PT"));
@@ -142,6 +146,20 @@ function draw_map(data) {
           }
         });
 
+        data[1].forEach(function(line) {
+          createPattern(defs, domainTBN, [1, 1, 3.5], line); // Create pattern with TBN data
+        });
+
+        svg.selectAll(".pattern")
+        .data(filterRegion)
+        .attr("fill", function(d) {
+          const codigo = d.properties.NUTS_ID;
+          const line = data[1].find(o => o.codigo === codigo);
+          if (line) {
+            return "url(#pattern_" + line.codigo + ")";
+          }
+        });
+
         // alterar texto (html) para o da região selecionada
         d3.select("#tbnH4").text('Taxa Bruta de Natalidade – '+tbnValue);
         d3.select("#tbmH4").text('Taxa Bruta de Mortalidade – '+tbmValue);
@@ -149,8 +167,10 @@ function draw_map(data) {
         d3.select("#regionSelected2").text(regionName);
         handleMapMouseOver(regionName);
 
+
         // svg.selectAll(".region").attr("opacity", 0.4); // trocar opacidade das restantes
         d3.select(targetSelected.parentNode).select(".region").attr("opacity", 1).attr('fill', '#6A6C99'); // região selecionada com opacidade máxima
+        d3.select(targetSelected.parentNode).select(".pattern").attr("opacity", 1).attr('fill', '#6A6C99'); // região selecionada com opacidade máxima
       } else {
         svg.selectAll(".region").attr("opacity", 1); // se o clique se deu fora de uma das regiões 
 
@@ -169,6 +189,20 @@ function draw_map(data) {
           const line = data[1].find(o => o.codigo === codigo);
           if (line) {
             return colorScale(line['tbm']);
+          }
+        });
+
+        data[1].forEach(function(line) {
+          createPattern(defs, [6, 7, 8, 9], [0.5, 1.5, 2.5, 3.5], line); // Create pattern with TBN data
+        });
+
+        svg.selectAll(".pattern")
+        .data(filterRegion)
+        .attr("fill", function(d) {
+          const codigo = d.properties.NUTS_ID;
+          const line = data[1].find(o => o.codigo === codigo);
+          if (line) {
+            return "url(#pattern_" + line.codigo + ")";
           }
         });
 
