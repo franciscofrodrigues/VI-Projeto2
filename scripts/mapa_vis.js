@@ -147,7 +147,7 @@ function draw_map(data) {
         });
 
         data[1].forEach(function(line) {
-          createPattern(defs, domainTBN, [1, 1, 3.5], line);
+          createPattern(defs, domainTBN, [1.5, 1.5, 3.5], line);
         });
 
         svg.selectAll(".pattern")
@@ -165,6 +165,8 @@ function draw_map(data) {
         d3.select("#tbmH4").text('Taxa Bruta de Mortalidade – '+tbmValue);
         d3.select("#regionSelected").text(regionName);
         d3.select("#regionSelected2").text(regionName);
+        d3.select("#imgTBN").attr("src", "img/legendaTBN-click.png");
+        d3.select("#imgTBM").attr("src", "img/legendaTBM-click.png");
         handleMapMouseOver(regionName);
 
         d3.select(targetSelected.parentNode).select(".region").attr("opacity", 1).attr('fill', '#6A6C99'); // região selecionada com opacidade máxima
@@ -209,6 +211,8 @@ function draw_map(data) {
         d3.select("#tbmH4").text('');
         d3.select("#regionSelected").text('');
         d3.select("#regionSelected2").text('Portugal Continental');
+        d3.select("#imgTBN").attr("src", "img/legendaTBN.png");
+        d3.select("#imgTBM").attr("src", "img/legendaTBM.png");
         handleMapMouseOver('Portugal Continental'); // reset radar chart
       }
     });
