@@ -105,13 +105,5 @@ hr {
 	display: fixed;
 	position: fixed;
 	margin-top: 0.5%;
-	margin-left: 0.5%;
-	
-}
-
-.buttonTop{
-	display: fixed;
-	position: fixed;
-	margin-top: 0.15%;
-	margin-left: 2.2%;
+	margin-left: 0.2%;
 }
